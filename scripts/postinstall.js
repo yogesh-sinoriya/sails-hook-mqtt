@@ -1,15 +1,15 @@
 var semver    = require('semver');
 var path      = require('path');
-var moduleDir = '../';
-var homeDir   = '../../'
-var requireDir= homeDir + moduleDir
+var moduleDir = path.join(__dirname+'/../');
+var homeDir   = path.join(__dirname+'/../../');
+var requireDir= path.join(__dirname+'/../../../');
 var fs = require('fs');
 var util = require('util');
 
-console.log(__dirname);
-fs.exists('node_modules/sails', function(exists){
+console.log(requireDir, homeDir, moduleDir);
+fs.exists(requireDir+'/node_modules/sails', function(exists){
 	if(exists){
-		var sailsVersion = require('node_modules/sails/package.json').version;
+		var sailsVersion = require(requireDir+'/node_modules/sails/package.json').version;
 		createMqtt(function(){
 			if(semver.lt(sailsVersion, '0.11.0')) createHook(function(){});
 		});
@@ -19,7 +19,7 @@ fs.exists('node_modules/sails', function(exists){
 })
 
 function createMqtt(cb){
-	fs.exists(homeDir + 'config/mqtt.js', function(exists){
+	fs.exists(requireDir + 'config/mqtt.js', function(exists){
 		if(exists) {
 			console.log('Mqtt file already exists.');
 			generateHandlerDir(cb);
@@ -31,9 +31,9 @@ function createMqtt(cb){
 }
 
 function createHook(cb){
-	fs.exists(homeDir + 'api/hooks', function(exists){
+	fs.exists(requireDir + 'api/hooks', function(exists){
 		if(exists){
-			fs.exists(homeDir + 'api/hooks/mqtt', function(exists){
+			fs.exists(requireDir + 'api/hooks/mqtt', function(exists){
 				if(exists){
 					generateHook(cb);
 				} else {
@@ -47,23 +47,32 @@ function createHook(cb){
 }
 
 function generateMqtt(cb){
-	fs.readFile('./templates/configMqtt.js', function(err, data){
-		fs.writeFile(homeDir + 'config/mqtt.js', data, function(err){
-			console.log('Mqtt file was generated');
-			// cb();
-			generateHandlerDir(cb);
-		});
+	fs.readFile(moduleDir+'/templates/configMqtt.js', function(err, data){
+		if(err){
+			console.error(new Error(err));
+		}else{
+			fs.writeFile(requireDir + 'config/mqtt.js', data, function(err){
+				if(err){
+					console.error(new Error(err));
+				}else{
+					console.log('Mqtt file generated');
+					// cb();
+					generateHandlerDir(cb);
+				}
+				
+			});
+		}
 	});
 }
 
 function generateHook(cb){
-	fs.exists(homeDir + 'api/hooks/mqtt/index.js', function(exists){
+	fs.exists(requireDir + 'api/hooks/mqtt/index.js', function(exists){
 		if(exists){
 			console.log('Hook file already exists');
 			cb();
 		} else {
-			fs.readFile('./templates/index.js', function(err, data){
-				fs.writeFile(homeDir + 'api/hooks/mqtt/index.js', data, function(err){
+			fs.readFile(moduleDir+'/templates/index.js', function(err, data){
+				fs.writeFile(requireDir + 'api/hooks/mqtt/index.js', data, function(err){
 					console.log('Hook file was generated');
 					cb();
 				});
@@ -73,16 +82,16 @@ function generateHook(cb){
 }
 
 function generateHookDir(cb){
-	fs.mkdir(homeDir + '/api/hooks/mqtt', function(err){
+	fs.mkdir(requireDir + '/api/hooks/mqtt', function(err){
 		console.log('Mqtt Hook Dir File Generated');
 		generateHook(cb);
 	});
 }
 
 function generateHooksDir(cb){
-	fs.mkdir(homeDir + '/api/hooks', function(err){
+	fs.mkdir(requireDir + '/api/hooks', function(err){
 		console.log('Hooks dir generated');
-		fs.exists(homeDir + 'api/hooks/mqtt', function(exists){
+		fs.exists(requireDir + 'api/hooks/mqtt', function(exists){
 			if(exists){
 				generateHook(cb);
 			} else {
@@ -93,9 +102,9 @@ function generateHooksDir(cb){
 }
 
 function generateHooksDir(cb){
-	fs.mkdir(homeDir + '/api/hooks', function(err){
+	fs.mkdir(requireDir + '/api/hooks', function(err){
 		console.log('Hooks dir generated');
-		fs.exists(homeDir + 'api/hooks/mqtt', function(exists){
+		fs.exists(requireDir + 'api/hooks/mqtt', function(exists){
 			if(exists){
 				generateHook(cb);
 			} else {
@@ -106,11 +115,11 @@ function generateHooksDir(cb){
 }
 
 function generateHandlerDir(cb){
-	fs.exists(homeDir + '/mqtt', function(exists){
+	fs.exists(requireDir + '/mqtt', function(exists){
 		if(exists){
 			generateHandler(cb);
 		} else {
-			fs.mkdir(homeDir + '/mqtt', function(err){
+			fs.mkdir(requireDir + '/mqtt', function(err){
 				console.log('Mqtt Handler Dir Generated');
 				generateHandler(cb);
 			});
@@ -119,13 +128,13 @@ function generateHandlerDir(cb){
 }
 
 function generateHandler(cb){
-	fs.exists(homeDir + '/mqtt/handler.js', function(exists){
+	fs.exists(requireDir + '/mqtt/handler.js', function(exists){
 		if(exists){
 			console.log('Handler file already exists');
 			cb();
 		} else {
-			fs.readFile('./templates/handler.js', function(err, data){
-				fs.writeFile(homeDir + '/mqtt/handler.js', data, function(err){
+			fs.readFile(moduleDir+'/templates/handler.js', function(err, data){
+				fs.writeFile(requireDir + '/mqtt/handler.js', data, function(err){
 					console.log('Hook file was generated');
 					cb();
 				});

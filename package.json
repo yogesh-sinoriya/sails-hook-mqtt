@@ -1,6 +1,6 @@
 {
   "name": "sails-hook-mqtt",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "mqtt client for sails app.",
   "main": "index.js",
   "sails": {
@@ -23,7 +23,7 @@
   "dependencies": {
     "async": "^2.6.0",
     "fs": "0.0.1-security",
-    "mqtt": "^2.15.0",
+    "mqtt": "^2.15.1",
     "path": "^0.12.7"
   },
   "devDependencies": {
