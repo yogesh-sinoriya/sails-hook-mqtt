@@ -32,7 +32,14 @@ Parameter      | Type                | Details
 -------------- | ------------------- |:---------------------------------
 topic       | ((string))          | Topic is the topic to publish to
 message           | ((string))          | Data to use to replace template tokens
-cb             | ((function))        | Callback to be run after the email sends (or if an error occurs).
+cb             | ((function))        | Callback to be run after publish message (or if an error occurs).
+
+`sails.hooks.mqtt.subscribe(topic, cb)`
+
+Parameter      | Type                | Details
+-------------- | ------------------- |:---------------------------------
+topic       | ((string))          | Topic is the topic to publish to
+cb             | ((function))        | Callback to be run after subscribe message (or if an error occurs).
 
 ## Configuration
 
@@ -40,12 +47,14 @@ By default, configuration lives in `sails.config.email` or ` config/mqtt.js`.  T
 
 ### broker
 Broker URL
+
 Parameter      | Type                | Details
 -------------- | ------------------- |:---------------------------------
 brocker        | ((string)) | brocker url, example `mqtt://127.0.0.1`
 
 ### connect
 connection perameters
+
 Parameter      | Type                | Details
 -------------- | ------------------- |:---------------------------------
 host        | ((string)) | any hostname or ip
@@ -66,13 +75,16 @@ handler     | ((object)) | handler to manage the events.
 
 ### publishOptions
 option on publish message
+
 Parameter      | Type                | Details
 -------------- | ------------------- |:---------------------------------
 qos         | ((string)) | QoS level, Number, default 0
 retain      | ((string)) | retain flag, Boolean, default false
 dup         | ((string)) | mark as duplicate flag, Boolean, default false
+
 ### subscribeOptions
 option on subscribe topic
+
 Parameter      | Type                | Details
 -------------- | ------------------- |:---------------------------------
 qos         | ((string)) | QoS level, Number, default 0
@@ -147,5 +159,4 @@ sails.hooks.mqtt.subscribe('topic/#',function(err, granted){
   sails.log.debug('Topic subscribe successfully');
 });
 ```
-
 
