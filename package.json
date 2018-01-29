@@ -1,0 +1,32 @@
+{
+	"name": "sails-hook-mqtt",
+	"version": "1.0.0",
+	"description": "mqtt client for sails app.",
+	"main": "index.js",
+	"sails": {
+		"isHook": true,
+		"hookName": "mqtt"
+	},
+	"scripts": {
+		"postinstall": "node scripts/postinstall",
+		"test": "mocha -R spec"
+	},
+	"keywords": [
+		"sails-mqtt",
+		"sails-hook-mqtt",
+		"mqtt",
+		"sails-hook",
+		"mqtts"
+	],
+	"author": "s.yogesh",
+	"license": "ISC",
+	"dependencies": {
+		"async": "^2.6.0",
+		"fs": "0.0.1-security",
+		"mqtt": "^2.15.0",
+		"path": "^0.12.7"
+	},
+	"devDependencies": {
+		"sails": "^0.12.14"
+	}
+}
