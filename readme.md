@@ -101,7 +101,7 @@ module.exports.mqtt = {
   _hookTimeout: 20000,
   broker : 'mqtt://127.0.0.1',                        // broker url
   connect:{                                           // connection config
-    host : '192.168.10.80',                         // host name
+    host : '127.0.0.1',                         // host name (optional)
     port : 8883 ,                                   // port no.
     clientId : 'sails_hook_mqtt_client',            // client id
      protocolId: 'MQTT',                            // protocol id (optional)
