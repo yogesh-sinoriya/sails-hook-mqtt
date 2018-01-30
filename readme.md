@@ -4,7 +4,7 @@
 >
 > Feel free to continue to use this hook in existing projects, as-is, as long as it's doing the job for you.
 > Just note that it's no longer the approach the Sails core team uses for new apps.
-> Instead, we are now recommending the approach for sending emails that is bundled as part of `sails new` in Sails v1.
+> Instead, we are now recommending the approach for publish & subscribe mqtt to topics that is bundled as part of `sails new` in Sails v1.
 >
 > To try that out, run `sails new foo --caviar` using Sails >= v1.0 and Node <= v7.9.
 >
@@ -12,7 +12,7 @@
 
 
 
-[![Dependency Status](https://david-dm.org/balderdashy/sails-hook-email.svg)](https://david-dm.org/yogesh-sinoriya/sails-hook-mqtt)
+[![Dependency Status](https://david-dm.org/yogesh-sinoriya/sails-hook-mqtt.svg)](https://david-dm.org/yogesh-sinoriya/sails-hook-mqtt)
 
 Email hook for [Sails JS](http://sailsjs.org), using [MQTT.js](https://github.com/mqttjs/MQTT.js)
 
@@ -43,7 +43,7 @@ cb             | ((function))        | Callback to be run after subscribe messag
 
 ## Configuration
 
-By default, configuration lives in `sails.config.email` or ` config/mqtt.js`.  The configuration key (`email`) can be changed by setting `sails.config.hooks['sails-hook-mqtt'].configKey`.
+By default, configuration lives in `sails.config.mqtt` or ` config/mqtt.js`.  The configuration key (`mqtt`) can be changed by setting `sails.config.hooks['sails-hook-mqtt'].configKey`.
 
 ### broker
 Broker URL
@@ -101,7 +101,7 @@ module.exports.mqtt = {
   _hookTimeout: 20000,
   broker : 'mqtt://127.0.0.1',                        // broker url
   connect:{                                           // connection config
-    host : '127.0.0.1',                         // host name (optional)
+    host : '127.0.0.1',                         // host name <optional></optional>
     port : 8883 ,                                   // port no.
     clientId : 'sails_hook_mqtt_client',            // client id
      protocolId: 'MQTT',                            // protocol id (optional)
